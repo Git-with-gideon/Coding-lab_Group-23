@@ -1,66 +1,63 @@
 #!/bin/bash
 
-# Set the folder containing the log files
-taget_dir="active_logs"
+# Define log directory and report file
+ACTIVE_LOGS_DIR="hospital_data/active_logs"
+REPORTS_DIR="hospital_data/reports"
+REPORT_FILE="$REPORTS_DIR/analysis_report.txt"
 
-# Move to the folder if not already there
-if [ "$PWD" != "$(realpath "$taget_dir")" ]; then
-    cd "$taget_dir" 
-else 
-	echo "Directory '$taget_dir' not found."; exit 1; 
+# Log file options
+declare -A LOG_OPTIONS=(
+  [1]="heart_rate.log"
+  [2]="temperature.log"
+  [3]="water_usage.log"
+)
+
+# Function to display the menu
+show_menu() {
+  echo "Select log file to analyze:"
+  echo "1) Heart Rate (heart_rate.log)"
+  echo "2) Temperature (temperature.log)"
+  echo "3) Water Usage (water_usage.log)"
+  echo "Enter choice (1-3): "
+}
+
+# Function to analyze the selected log
+analyze_log() {
+  local choice=$1
+  local log_file="${LOG_OPTIONS[$choice]}"
+  local log_path="$ACTIVE_LOGS_DIR/$log_file"
+
+  # Check if log file exists
+  if [ ! -f "$log_path" ]; then
+    echo "Error: $log_file not found in $ACTIVE_LOGS_DIR"
+    return 1
+  fi
+
+  echo "Analyzing $log_file..."
+
+  # Count occurrences of each device
+  echo "Device Counts:" >> "$REPORT_FILE"
+  grep -o "DEVICE=[^ ]*" "$log_path" | sort | uniq -c | awk '{printf "%s: %s\n", $2, $1}' >> "$REPORT_FILE"
+
+  # Find first and last entry timestamps (Bonus)
+  echo -e "\nFirst and Last Entry Timestamps (Bonus):" >> "$REPORT_FILE"
+  first_timestamp=$(head -n 1 "$log_path" | awk '{print $1, $2}')
+  last_timestamp=$(tail -n 1 "$log_path" | awk '{print $1, $2}')
+  echo "First: $first_timestamp" >> "$REPORT_FILE"
+  echo "Last:  $last_timestamp" >> "$REPORT_FILE"
+
+  echo "Analysis of $log_file complete. Results appended to $REPORT_FILE"
+}
+
+# Main script logic
+show_menu
+
+read -r choice
+
+# Validate user input
+if ! [[ "$choice" =~ ^[1-3]$ ]]; then
+  echo "Invalid choice. Please enter a number between 1 and 3."
+  exit 1
 fi
 
-# Main loop
-while true; do
-    echo "
-Select a log file to analyze:
-1) Heart Rate
-2) Temperature
-3) Water Usage
-4) Exit"
-    read -r choice
-
-    if [ "$choice" = "4" ]; then
-        echo "Exiting log viewer. Goodbye!"
-        break
-    elif [ "$choice" = "1" ]; then
-        log_file="heart_rate.log"
-    elif [ "$choice" = "2" ]; then
-        log_file="temperature.log"
-    elif [ "$choice" = "3" ]; then
-        log_file="water_usage.log"
-    else
-        echo "Invalid choice. Try again."
-        continue
-    fi
-
-    # Check if the file exists
-    if [ ! -f "$log_file" ]; then
-        echo "File '$log_file' not found."
-        continue
-    fi
-
-    echo "
-View options for '$log_file':
-1) Oldest (first 10 lines)
-2) Newest (last 10 lines)
-3) All"
-    read -r user_choice
-
-    if [ "$user_choice" = "1" ]; then
-        echo "--- Oldest ---"
-        head -n 10 "$log_file"
-    elif [ "$user_choice" = "2" ]; then
-        echo "--- Newest ---"
-        tail -n 10 "$log_file"
-    elif [ "$user_choice" = "3" ]; then
-        echo "--- Full Log ---"
-        cat "$log_file"
-    else
-        echo "Invalid view option."
-    fi
-
-    echo ""
-    echo "Done. Returning to main menu..."
-done
-
+analyze_log "$choice"
