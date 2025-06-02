@@ -5,7 +5,9 @@ taget_dir="active_logs"
 
 # Move to the folder if not already there
 if [ "$PWD" != "$(realpath "$taget_dir")" ]; then
-    cd "$taget_dir" || { echo "Directory '$taget_dir' not found."; exit 1; }
+    cd "$taget_dir" 
+else 
+	echo "Directory '$taget_dir' not found."; exit 1; 
 fi
 
 # Main loop
