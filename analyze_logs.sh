@@ -37,14 +37,26 @@ analyze_log() {
 
   # Count occurrences of each device
   echo "Device Counts:" >> "$REPORT_FILE"
-  grep -o "DEVICE=[^ ]*" "$log_path" | sort | uniq -c | awk '{printf "%s: %s\n", $2, $1}' >> "$REPORT_FILE"
+  grep "DEVICE=" "$log_path" | awk -F'=' '{print $2}' | sort | uniq -c | awk '{printf "%s %s\n", $2, $1}' >> "$REPORT_FILE"
 
   # Find first and last entry timestamps (Bonus)
   echo -e "\nFirst and Last Entry Timestamps (Bonus):" >> "$REPORT_FILE"
-  first_timestamp=$(head -n 1 "$log_path" | awk '{print $1, $2}')
-  last_timestamp=$(tail -n 1 "$log_path" | awk '{print $1, $2}')
-  echo "First: $first_timestamp" >> "$REPORT_FILE"
-  echo "Last:  $last_timestamp" >> "$REPORT_FILE"
+  first_line=$(head -n 1 "$log_path")
+  last_line=$(tail -n 1 "$log_path")
+
+  if [[ -n "$first_line" ]]; then
+    first_timestamp=$(echo "$first_line" | awk '{print $1, $2}')
+    echo "First: $first_timestamp" >> "$REPORT_FILE"
+  else
+    echo "First: No data" >> "$REPORT_FILE"
+  fi
+
+  if [[ -n "$last_line" ]]; then
+    last_timestamp=$(echo "$last_line" | awk '{print $1, $2}')
+    echo "Last:  $last_timestamp" >> "$REPORT_FILE"
+  else
+    echo "Last:  No data" >> "$REPORT_FILE"
+  fi
 
   echo "Analysis of $log_file complete. Results appended to $REPORT_FILE"
 }
