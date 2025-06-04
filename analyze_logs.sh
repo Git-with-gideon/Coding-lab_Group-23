@@ -60,5 +60,6 @@ for device in $(awk '{print $3}' "$log_file" | sort | uniq); do
     echo "  Last entry: $last" >> "$REPORT_FILE"
 done
 
+
 echo -e "\nAnalysis complete. Results saved to $REPORT_FILE"
 cat "$REPORT_FILE"
