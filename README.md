@@ -42,9 +42,9 @@ hospital_data/
 
 1.  **Run Simulators:** Execute the Python simulator scripts to start generating log data:
     ```bash
-    python heart_monitor.py &
-    python temp_sensor.py &
-    python water_meter.py &
+    python3 heart_rate_monitor.py start
+    python3 temperature_recorder.py start
+    python3 water_meter.py start
     ```
 2.  **Archive Logs:** Run the `archive_logs.sh` script to archive log files:
     ```bash
