@@ -1,1 +1,16 @@
 
+=== Analysis Report for Heart Rate ===
+Generated on: Wed 04 Jun 2025 06:44:54 AM PDT
+---------------------------------
+
+Device Counts:
+HeartRate_Monitor_A: 55 entries
+HeartRate_Monitor_B: 55 entries
+
+First and Last Entries:
+HeartRate_Monitor_A:
+  First entry: 2025-06-04 06:44:00
+  Last entry: 2025-06-04 06:44:54
+HeartRate_Monitor_B:
+  First entry: 2025-06-04 06:44:00
+  Last entry: 2025-06-04 06:44:54

@@ -6,9 +6,9 @@ ARCHIVE_LOGS_DIR="hospital_data/archived_logs"
 
 # Log file options and archive directories
 declare -A LOG_OPTIONS=(
-  [1]="heart_rate.log"
-  [2]="temperature.log"
-  [3]="water_usage.log"
+  [1]="heart_rate_log.log"
+  [2]="temperature_log.log"
+  [3]="water_usage_log.log"
 )
 declare -A ARCHIVE_DIRS=(
   [1]="heart_data_archive"
@@ -19,9 +19,9 @@ declare -A ARCHIVE_DIRS=(
 # Function to display the menu
 show_menu() {
   echo "Select log to archive:"
-  echo "1) Heart Rate"
-  echo "2) Temperature"
-  echo "3) Water Usage"
+  echo "1) heart_rate_log.log"
+  echo "2) temperature_log.log"
+  echo "3) water_usage_log.log"
   echo "Enter choice (1-3): "
 }
 
