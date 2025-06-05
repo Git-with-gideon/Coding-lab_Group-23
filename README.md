@@ -14,6 +14,7 @@ The system consists of the following components:
 
 The following directory structure is used by the system:
 
+```bash
 hospital_data/
 ├── active_logs/
 │   ├── heart_rate.log
@@ -25,6 +26,7 @@ hospital_data/
 │   └── water_usage_data_archive/
 └── reports/
 └── analysis_report.txt
+```
 
 ## Setup
 
