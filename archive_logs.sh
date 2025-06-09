@@ -41,8 +41,8 @@ archive_log() {
 
   # Check if archive directory exists
   if [ ! -d "$ARCHIVE_LOGS_DIR/$archive_dir" ]; then
-    echo "Error: Archive directory $ARCHIVE_LOGS_DIR/$archive_dir not found"
-    return 1
+	echo "Error: Archive directory $ARCHIVE_LOGS_DIR/$archive_dir does not exist, However it has been created!"
+	mkdir -p "$ARCHIVE_LOGS_DIR/$archive_dir"
   fi
 
   # Move and rename the log file

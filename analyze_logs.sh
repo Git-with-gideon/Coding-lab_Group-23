@@ -5,6 +5,9 @@ ACTIVE_LOGS_DIR="hospital_data/active_logs"
 REPORTS_DIR="hospital_data/reports"
 REPORT_FILE="${REPORTS_DIR}/analysis_report.txt"
 
+# Ensure reports directory exists
+mkdir -p "$REPORTS_DIR"
+
 # Display menu
 echo "Select log file to analyze:"
 echo "1) Heart Rate (heart_rate_log.log)"
