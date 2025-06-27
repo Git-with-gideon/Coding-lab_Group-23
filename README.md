@@ -14,6 +14,7 @@ The system consists of the following components:
 
 The following directory structure is used by the system:
 
+```
 hospital_data/
 ├── active_logs/
 │   ├── heart_rate.log
@@ -25,7 +26,7 @@ hospital_data/
 │   └── water_usage_data_archive/
 └── reports/
 └── analysis_report.txt
-
+```
 ## Setup
 
 1.  **Download Python Simulators:** Download the Python scripts (`heart_monitor.py`, `temp_sensor.py`, `water_meter.py`) from the provided URLs and save them.
